@@ -1,0 +1,16 @@
+# Essential packages for running the benchmark scripts
+# Note: Install PyTorch first with: pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/xpu
+torch>=2.8.0
+torchvision>=0.19.0
+torchaudio>=2.8.0
+transformers>=4.53.0
+onnxruntime>=1.22.0
+onnxruntime-openvino>=1.22.0
+openvino>=2025.2.0
+optimum>=1.26.0
+numpy>=2.2.0
+psutil>=7.0.0
+huggingface-hub>=0.33.0
+tokenizers>=0.21.0
+safetensors>=0.5.0
+tqdm>=4.67.0

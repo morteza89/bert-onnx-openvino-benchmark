@@ -1,0 +1,88 @@
+# Core ML and Inference Frameworks
+# Note: Install PyTorch with XPU support using:
+# pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/xpu
+torch==2.8.0+xpu
+torchvision==0.19.0+xpu
+torchaudio==2.8.0+xpu
+transformers==4.53.1
+onnxruntime==1.22.0
+onnxruntime-openvino==1.22.0
+openvino==2025.2.0
+optimum==1.26.1
+
+# Data Processing and Scientific Computing
+numpy==2.2.6
+huggingface-hub==0.33.2
+tokenizers==0.21.2
+safetensors==0.5.3
+
+# System Monitoring and Utilities
+psutil==7.0.0
+tqdm==4.67.1
+
+# Intel-specific Runtime Libraries (for NPU and XPU support)
+mkl==2025.1.0
+intel-openmp==2025.1.1
+intel-sycl-rt==2025.1.1
+intel-cmplr-lib-rt==2025.1.1
+dpcpp-cpp-rt==2025.1.1
+tbb==2022.1.0
+
+# Intel oneMKL SYCL Libraries
+onemkl-sycl-blas==2025.1.0
+onemkl-sycl-dft==2025.1.0
+onemkl-sycl-lapack==2025.1.0
+onemkl-sycl-rng==2025.1.0
+onemkl-sycl-sparse==2025.1.0
+
+# Additional Intel Libraries
+intel-opencl-rt==2025.1.1
+intel-cmplr-lib-ur==2025.1.1
+intel-cmplr-lic-rt==2025.1.1
+intel-pti==0.12.3
+umf==0.10.0
+tcmlib==1.3.0
+
+# PyTorch XPU Extensions
+pytorch-triton-xpu==3.4.0
+# Note: torchaudio is listed above with torch and torchvision
+
+# Serialization and Data Formats
+onnx==1.18.0
+protobuf==6.31.1
+
+# Configuration and Template Processing
+PyYAML==6.0.2
+Jinja2==3.1.6
+MarkupSafe==3.0.2
+
+# Networking and HTTP
+requests==2.32.4
+urllib3==2.5.0
+certifi==2025.7.9
+charset-normalizer==3.4.2
+idna==3.10
+
+# Utilities
+filelock==3.18.0
+fsspec==2025.5.1
+packaging==25.0
+regex==2024.11.6
+sympy==1.14.0
+mpmath==1.3.0
+networkx==3.5
+typing_extensions==4.14.1
+
+# Logging and Console Output
+coloredlogs==15.0.1
+humanfriendly==10.0
+colorama==0.4.6
+
+# OpenVINO Telemetry
+openvino-telemetry==2025.2.0
+
+# Additional Low-level Libraries
+flatbuffers==25.2.10
+
+# Windows-specific (optional)
+pyreadline3==3.5.4

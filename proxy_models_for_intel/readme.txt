@@ -1,0 +1,2 @@
+Included are 2 models: a smaller and a larger variations of BERT, both are token classification models of the same task.
+Each folder includes the original trained model in safetensors format, and a converted model with batch_size=1 and batch_size=32
