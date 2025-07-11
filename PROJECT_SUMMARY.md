@@ -1,17 +1,20 @@
 # Project Summary: BERT ONNX vs OpenVINO Benchmarking
 
 ## Project Overview
+
 Comprehensive performance comparison of BERT token classification model inference using ONNX Runtime and OpenVINO on Intel NPU hardware.
 
 ## Files Included (14 total)
 
 ### 🚀 Benchmark Scripts (4 files)
-1. **Final Comprehensive ORT Benchmark Script.py** - ✅ BEST PERFORMANCE (Direct ONNX Runtime)
+
+1. **Final Comprehensive ORT Benchmark Script.py**
 2. **Final Comprehensive optimum Benchmark Script.py** - Alternative using ORTModel
 3. **Latency Benchmark Script.py** - Original simple benchmark
 4. **Latency Benchmark Script - ORTModel.py** - Simple ORTModel version
 
-### 📦 Installation & Setup (6 files)
+### Installation & Setup (6 files)
+
 1. **requirements.txt** - Complete environment (60+ packages)
 2. **requirements-minimal.txt** - Essential packages only (15 packages)
 3. **requirements-remaining.txt** - Install after PyTorch XPU
@@ -19,7 +22,8 @@ Comprehensive performance comparison of BERT token classification model inferenc
 5. **install_environment.sh** - Linux/Mac auto-installer
 6. **INSTALLATION_GUIDE.md** - Complete setup guide
 
-### 📊 Results & Documentation (4 files)
+### Results & Documentation (4 files)
+
 1. **README.md** - Project overview and quick start
 2. **BENCHMARK_COMPARISON_RESULTS.md** - Detailed performance analysis
 3. **benchmark_results_20250710_124343.json** - ORTModel results
@@ -27,18 +31,13 @@ Comprehensive performance comparison of BERT token classification model inferenc
 
 ## Key Performance Results
 
-### Winner: Direct ONNX Runtime 🏆
-- **Mean Latency**: 7.347ms (25% faster than ORTModel)
-- **Throughput**: 132.60 inferences/sec
-- **P95 Latency**: 8.962ms
-- **Consistency**: 17.67% coefficient of variation
-
 ### Comparison Summary
-| Method | Latency | Throughput | Winner |
-|--------|---------|------------|---------|
-| Direct ONNX Runtime | 7.347ms | 132.60 inf/sec | 🥇 |
-| OpenVINO IR | 7.520ms | 131.64 inf/sec | 🥈 |
-| ORTModel | 9.828ms | 123.28 inf/sec | 🥉 |
+
+| Method              | Latency | Throughput     | Winner |
+| ------------------- | ------- | -------------- | ------ |
+| Direct ONNX Runtime | 7.347ms | 132.60 inf/sec | 🥇     |
+| OpenVINO IR         | 7.420ms | 131.84 inf/sec | 🥈     |
+| ORTModel            | 9.828ms | 123.28 inf/sec | 🥉     |
 
 ## Quick Start Commands
 
@@ -54,17 +53,21 @@ python "Final Comprehensive ORT Benchmark Script.py"
 ```
 
 ## Hardware Tested
+
 - **Device**: Intel NPU
 - **Model**: BERT Token Classification
 - **Input**: 512 tokens, batch size 1
 - **Test Duration**: 2000 iterations + 60s throughput
 
 ## Production Recommendation
+
 ✅ **Use Direct ONNX Runtime** for production deployments
+
 - 25% faster than ORTModel approach
 - Better consistency and reliability
 - Lower overhead and resource usage
 
 ---
-*Generated: July 10, 2025*
-*Environment: Intel NPU with PyTorch XPU support*
+
+_Generated: July 10, 2025_
+_Environment: Intel NPU with PyTorch XPU support_
