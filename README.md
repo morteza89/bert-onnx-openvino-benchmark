@@ -29,8 +29,11 @@ All tests are conducted on Intel hardware (CPU, GPU, NPU) to evaluate the perfor
 ### Results and Documentation
 
 - **`BENCHMARK_COMPARISON_RESULTS.md`** - Detailed analysis and comparison of all benchmark results
-- **`benchmark_results_20250710_124343.json`** - Results from ORTModel benchmark
-- **`ort_benchmark_results_20250710_133153.json`** - Results from direct ONNX Runtime benchmark
+- **`benchmark_results/`** - Directory containing all benchmark result JSON files
+  - `ort_benchmark_results_20250711_133908.json` - ONNX (onnxruntime) small model results
+  - `ort_benchmark_results_20250711_134756.json` - ONNX (onnxruntime) large model results
+  - `benchmark_results_20250711_135852.json` - ONNX (optimum) small model results
+  - `benchmark_results_20250711_140243.json` - ONNX (optimum) large model results
 - **`README.md`** - This file
 - **`PROJECT_SUMMARY.md`** - High-level project overview and summary
 
@@ -82,7 +85,7 @@ python "Comprehensive optimum Benchmark Script.py"
 python "Step-by-step ONNX Export .py"
 ```
 
-## 🏆 Key Findings
+## Key Findings
 
 ### Performance Comparison: Native OpenVINO vs ONNX with OpenVINO Execution Provider
 
@@ -115,20 +118,20 @@ Our comprehensive benchmarking reveals that **native OpenVINO models consistentl
 #### For Production Deployment:
 
 - **✅ Use Native OpenVINO models** for best performance and lowest latency
-- **🔄 Convert PyTorch → ONNX → Native OpenVINO** for optimal Intel hardware utilization
-- **📊 5-16% performance advantage** over ONNX with OpenVINOExecutionProvider
+- **Convert PyTorch → ONNX → Native OpenVINO** for optimal Intel hardware utilization
+- **5-16% performance advantage** over ONNX with OpenVINOExecutionProvider
 
 #### For Development and Prototyping:
 
-- **🛠️ ONNX with OpenVINOExecutionProvider** offers good performance with easier integration
-- **⚖️ Minimal difference** between `onnxruntime` and `optimum.onnxruntime` approaches
-- **🔄 Easy migration path** from ONNX to native OpenVINO when ready for production
+- **ONNX with OpenVINOExecutionProvider** offers good performance with easier integration
+- **Minimal difference** between `onnxruntime` and `optimum.onnxruntime` approaches
+- **Easy migration path** from ONNX to native OpenVINO when ready for production
 
 #### Hardware Considerations:
 
 - **🚀 Intel NPU** provides excellent acceleration for both native OpenVINO and ONNX models
-- **📈 Performance scales well** with model size across all approaches
-- **🎯 Native OpenVINO** maximizes NPU utilization for production workloads
+- **Performance scales well** with model size across all approaches
+- **Native OpenVINO** maximizes NPU utilization for production workloads
 
 ## 📊 Comprehensive Test Results
 
@@ -154,7 +157,7 @@ Based on extensive benchmarking conducted on July 11, 2025, with both small and 
 - **Large Model**: 8ms latency range, 120-129 inf/sec
 - **Scaling**: Native OpenVINO advantage increases with model size (~2.4x performance impact)
 
-## 📊 Benchmark Features
+## Benchmark Features
 
 - **High-precision timing** (nanosecond accuracy)
 - **Statistical analysis** (mean, median, P95, P99, std dev)
@@ -214,7 +217,6 @@ device = "NPU"  # Options: "CPU", "GPU", "NPU"
 - **Framework**: PyTorch → ONNX → OpenVINO
 - **Input**: 512 token sequences
 - **Batch Size**: 1 (fixed)
-- **Precision**: FP32
 
 ## Use Cases
 
