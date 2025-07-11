@@ -63,6 +63,11 @@ Thumbs.db
 # *.xml
 # *.safetensors
 
+# Model directories and files to ignore
+proxy_models_for_intel/proxy_models_for_intel.zip
+proxy_models_for_intel/test_bigger_model/
+proxy_models_for_intel/test_smaller_model/
+
 # Exclude specific model directories and files
 proxy_models_for_intel/proxy_models_for_intel.zip
 proxy_models_for_intel/test_bigger_model/
