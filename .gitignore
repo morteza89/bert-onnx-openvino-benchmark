@@ -39,6 +39,7 @@ env.bak/
 venv.bak/
 .venv/
 .env
+.venv_intel_npu_benchmark/
 
 # IDE
 .vscode/
@@ -61,6 +62,11 @@ Thumbs.db
 # *.bin
 # *.xml
 # *.safetensors
+
+# Exclude specific model directories and files
+proxy_models_for_intel/proxy_models_for_intel.zip
+proxy_models_for_intel/test_bigger_model/
+proxy_models_for_intel/test_smaller_model/
 
 # Results (uncomment if you don't want to include results)
 # *_results_*.json

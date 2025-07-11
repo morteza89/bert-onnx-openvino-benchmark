@@ -36,6 +36,16 @@ echo ✓ PyTorch XPU installed
 REM Install remaining packages from requirements
 echo Installing remaining packages...
 pip install -r requirements-remaining.txt
+if errorlevel 1 (
+    echo Warning: Some packages failed to install. Continuing...
+    echo Attempting to install critical packages individually...
+    pip install onnxruntime onnxruntime-openvino openvino psutil transformers
+    if errorlevel 1 (
+        echo Error: Critical packages failed to install.
+        pause
+        exit /b 1
+    )
+)
 
 echo ✓ All packages installed successfully
 

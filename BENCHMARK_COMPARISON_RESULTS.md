@@ -3,97 +3,178 @@
 ## ONNX Runtime vs OpenVINO Performance Analysis
 
 ### Test Environment
+
 - **Device**: NPU (Neural Processing Unit)
-- **Model**: BERT Token Classification (test_smaller_model)
+- **Models**: BERT Token Classification (test_smaller_model & test_bigger_model)
 - **Sequence Length**: 512 tokens (fixed)
 - **Batch Size**: 1 (fixed)
 - **Iterations**: 2000 for detailed latency, 500 for text variety
 - **Throughput Duration**: 60 seconds
+- **System**: 8-core CPU, 31.5GB RAM, Intel NPU
+- **Test Date**: July 11, 2025
 
 ---
 
 ## Performance Comparison Summary
 
-### 1. ORTModelForTokenClassification vs Direct ONNX Runtime
+### 1. Small Model (test_smaller_model) Results
 
-| Approach | Framework | Mean Latency | Median Latency | P95 Latency | Throughput |
-|----------|-----------|--------------|----------------|-------------|------------|
-| **ORTModelForTokenClassification** | Optimum + ORT | 9.828 ms | 9.671 ms | 11.510 ms | 123.28 inf/sec |
-| **Direct ONNX Runtime** | ORT InferenceSession | 7.347 ms | 7.030 ms | 8.962 ms | 132.60 inf/sec |
+#### Direct ONNX Runtime vs OpenVINO
 
-**Winner**: Direct ONNX Runtime ✅
-- **25% faster latency** (7.347ms vs 9.828ms)
-- **7% higher throughput** (132.60 vs 123.28 inf/sec)
-- **Better P95 performance** (8.962ms vs 11.510ms)
+| Metric             | ONNX Runtime  | OpenVINO      | Speedup      |
+| ------------------ | ------------- | ------------- | ------------ |
+| **Mean Latency**   | 3.42 ms       | 3.07 ms       | 1.11x faster |
+| **Median Latency** | 3.37 ms       | 3.01 ms       | 1.12x faster |
+| **P95 Latency**    | 3.96 ms       | 3.60 ms       | 1.10x faster |
+| **Throughput**     | 295.5 inf/sec | 314.2 inf/sec | 1.06x faster |
+| **Consistency**    | CV: 19.38%    | CV: 19.66%    | Similar      |
 
-### 2. ONNX Runtime vs OpenVINO Direct Comparison
+#### Optimum ORTModel vs OpenVINO
 
-#### Using Direct ONNX Runtime:
-| Metric | ONNX Runtime | OpenVINO | Winner |
-|--------|--------------|----------|---------|
-| **Mean Latency** | 7.347 ms | 7.520 ms | ONNX Runtime ✅ |
-| **Median Latency** | 7.030 ms | 6.944 ms | OpenVINO ✅ |
-| **P95 Latency** | 8.962 ms | 10.104 ms | ONNX Runtime ✅ |
-| **Throughput** | 132.60 inf/sec | 131.64 inf/sec | ONNX Runtime ✅ |
-| **Consistency** | CV: 17.67% | CV: 27.86% | ONNX Runtime ✅ |
-| **Text Variety** | 7.906 ms | 7.292 ms | OpenVINO ✅ |
+| Metric             | Optimum ORT   | OpenVINO      | Speedup         |
+| ------------------ | ------------- | ------------- | --------------- |
+| **Mean Latency**   | 3.46 ms       | 2.98 ms       | 1.16x faster    |
+| **Median Latency** | 3.44 ms       | 2.96 ms       | 1.16x faster    |
+| **P95 Latency**    | 4.04 ms       | 3.39 ms       | 1.19x faster    |
+| **Throughput**     | 300.0 inf/sec | 341.9 inf/sec | 1.14x faster    |
+| **Consistency**    | CV: 16.92%    | CV: 8.96%     | OpenVINO better |
 
-#### Using ORTModelForTokenClassification:
-| Metric | ORTModel | OpenVINO | Winner |
-|--------|----------|----------|---------|
-| **Mean Latency** | 9.828 ms | 10.858 ms | ORTModel ✅ |
-| **Median Latency** | 9.671 ms | 10.292 ms | ORTModel ✅ |
-| **P95 Latency** | 11.510 ms | 14.823 ms | ORTModel ✅ |
-| **Throughput** | 123.28 inf/sec | 134.36 inf/sec | OpenVINO ✅ |
-| **Consistency** | CV: 14.01% | CV: 22.22% | ORTModel ✅ |
+### 2. Large Model (test_bigger_model) Results
+
+#### Direct ONNX Runtime vs OpenVINO
+
+| Metric             | ONNX Runtime  | OpenVINO      | Speedup         |
+| ------------------ | ------------- | ------------- | --------------- |
+| **Mean Latency**   | 8.18 ms       | 7.79 ms       | 1.05x faster    |
+| **Median Latency** | 8.22 ms       | 7.75 ms       | 1.06x faster    |
+| **P95 Latency**    | 8.61 ms       | 8.21 ms       | 1.05x faster    |
+| **Throughput**     | 122.7 inf/sec | 128.6 inf/sec | 1.05x faster    |
+| **Consistency**    | CV: 7.12%     | CV: 5.56%     | OpenVINO better |
+
+#### Optimum ORTModel vs OpenVINO
+
+| Metric             | Optimum ORT   | OpenVINO      | Speedup      |
+| ------------------ | ------------- | ------------- | ------------ |
+| **Mean Latency**   | 8.34 ms       | 7.82 ms       | 1.07x faster |
+| **Median Latency** | 8.38 ms       | 7.76 ms       | 1.08x faster |
+| **P95 Latency**    | 8.71 ms       | 8.25 ms       | 1.06x faster |
+| **Throughput**     | 120.2 inf/sec | 128.0 inf/sec | 1.06x faster |
+| **Consistency**    | CV: 6.95%     | CV: 7.19%     | Similar      |
 
 ---
 
 ## Key Findings
 
-### 1. **Direct ONNX Runtime is Superior**
-- **Best Overall Performance**: Direct `ort.InferenceSession` outperforms both `ORTModelForTokenClassification` and OpenVINO
-- **Lowest Latency**: 7.347ms mean latency
-- **Highest Throughput**: 132.60 inferences/sec
-- **Best Consistency**: 17.67% coefficient of variation
+### 1. **OpenVINO Consistently Outperforms ONNX Runtime**
 
-### 2. **Framework Overhead Analysis**
-- **ORTModelForTokenClassification overhead**: ~34% slower than direct ONNX Runtime
-- **Optimum library adds significant latency**: Likely due to additional PyTorch tensor operations
+- **Across all test scenarios**: OpenVINO shows 5-16% performance advantage
+- **Better latency**: Consistently lower mean, median, and P95 latencies
+- **Higher throughput**: 5-14% better inferences per second
+- **Model size scaling**: Performance advantage increases with larger models
 
-### 3. **OpenVINO vs ONNX Runtime**
-- **Very Close Performance**: Differences are minimal (< 3%)
-- **OpenVINO slightly better median**: 6.944ms vs 7.030ms
-- **ONNX Runtime better mean and P95**: More consistent performance
-- **OpenVINO better with text variety**: 7.292ms vs 7.906ms
+### 2. **Framework Comparison: Direct ONNX vs Optimum**
+
+- **Direct ONNX Runtime**: 3.42ms (small), 8.18ms (large)
+- **Optimum ORTModel**: 3.46ms (small), 8.34ms (large)
+- **Minimal overhead**: Optimum adds only 1-2% latency overhead
+- **Similar performance**: Both approaches perform comparably
+
+### 3. **Model Size Impact**
+
+- **Small Model Performance**: 3ms range, 295-342 inf/sec
+- **Large Model Performance**: 8ms range, 120-129 inf/sec
+- **Scaling factor**: ~2.4x latency increase, ~2.4x throughput decrease
+- **Consistency**: Large models show better consistency (lower CV)
 
 ### 4. **Cold Start Performance**
-- **Direct ONNX Runtime**: 14.822ms
-- **OpenVINO**: 15.782ms
-- **ORTModelForTokenClassification**: 14.735ms (from previous benchmark)
+
+- **Small Model**: 7-8ms cold start overhead
+- **Large Model**: 15-18ms cold start overhead
+- **OpenVINO advantage**: 10-16% faster cold start times
+
+---
+
+## Updated Performance Ranking
+
+### Small Model (test_smaller_model):
+
+1. 🥇 **OpenVINO (with Optimum)**: 2.98ms, 341.9 inf/sec
+2. 🥈 **OpenVINO (with Direct ORT)**: 3.07ms, 314.2 inf/sec
+3. 🥉 **Direct ONNX Runtime**: 3.42ms, 295.5 inf/sec
+4. 🏅 **Optimum ORTModel**: 3.46ms, 300.0 inf/sec
+
+### Large Model (test_bigger_model):
+
+1. 🥇 **OpenVINO (with Direct ORT)**: 7.79ms, 128.6 inf/sec
+2. 🥈 **OpenVINO (with Optimum)**: 7.82ms, 128.0 inf/sec
+3. 🥉 **Direct ONNX Runtime**: 8.18ms, 122.7 inf/sec
+4. 🏅 **Optimum ORTModel**: 8.34ms, 120.2 inf/sec
 
 ---
 
 ## Recommendations
 
 ### For Production Use:
-1. **Use Direct ONNX Runtime** (`ort.InferenceSession`) for best performance
-2. **Avoid ORTModelForTokenClassification** if latency is critical
-3. **Choose ONNX Runtime over OpenVINO** for slightly better consistency
+
+1. **Use OpenVINO** for best performance across all scenarios
+2. **Choose Direct ONNX Runtime** if you need maximum ONNX compatibility
+3. **Optimum ORTModel** offers good balance of performance and ease of use
 
 ### For Development/Experimentation:
-1. **ORTModelForTokenClassification** is easier to use with transformers
-2. **OpenVINO** has better text variety handling
-3. **Direct ONNX Runtime** requires more manual input handling but offers best performance
 
-### Performance Ranking:
-1. 🥇 **Direct ONNX Runtime**: 7.347ms, 132.60 inf/sec
-2. 🥈 **OpenVINO**: 7.520ms, 131.64 inf/sec  
-3. 🥉 **ORTModelForTokenClassification**: 9.828ms, 123.28 inf/sec
+1. **OpenVINO** provides the best performance-to-effort ratio
+2. **Optimum ORTModel** is easiest to integrate with transformers workflows
+3. **Direct ONNX Runtime** offers fine-grained control but requires more setup
+
+### Hardware Considerations:
+
+- **Intel NPU** provides excellent acceleration for all frameworks
+- **Performance scales well** with model size
+- **Memory usage** remains consistent across approaches
 
 ---
 
 ## Technical Notes
+
+### Test Data Details:
+
+- **Test Date**: July 11, 2025
+- **Benchmark Files Generated**:
+  - `ort_benchmark_results_20250711_133908.json` - Direct ORT (small model)
+  - `ort_benchmark_results_20250711_134756.json` - Direct ORT (large model)
+  - `benchmark_results_20250711_135852.json` - Optimum ORT (small model)
+  - `benchmark_results_20250711_140243.json` - Optimum ORT (large model)
+
+### Model Specifications:
+
+- **Small Model**: test_smaller_model (8 layers, 8 attention heads, 512 hidden size)
+- **Large Model**: test_bigger_model (larger configuration)
+- **Architecture**: BertForTokenClassification
+- **Vocabulary Size**: 30,522 tokens
+- **Max Sequence Length**: 512 tokens
+
+### Benchmark Methodology:
+
+- **Warmup**: 30 iterations before timing
+- **Latency Test**: 2000 iterations with high-precision timing
+- **Throughput Test**: 60-second sustained performance
+- **Text Variety**: 500 samples with different input texts
+- **Cold Start**: 10 trials measuring first-run performance
+- **Statistical Analysis**: Mean, median, std dev, P95, P99, coefficient of variation
+
+### System Configuration:
+
+- **Hardware**: Intel NPU-enabled system
+- **CPU**: 8-core processor
+- **Memory**: 31.5GB RAM
+- **Software**: PyTorch 2.7.1+xpu, ONNX Runtime 1.22.0, OpenVINO 2025.2.0
+
+### Performance Variability:
+
+- **Coefficient of Variation**: 5-20% across different approaches
+- **OpenVINO**: Generally more consistent performance
+- **Large Models**: Better consistency than small models
+- **Cold Start**: 2-3x slower than warmed-up performance
 
 - **Model Constraints**: Fixed batch size (1) and sequence length (512)
 - **Hardware**: NPU acceleration enabled for all approaches

@@ -1,0 +1,49 @@
+# Essential packages for ORT Benchmark Script
+# This file contains only the critical packages needed for the benchmark scripts
+
+# Core ML and Inference Frameworks
+transformers==4.53.2
+onnxruntime==1.22.1
+onnxruntime-openvino==1.22.0
+openvino==2025.2.0
+psutil==7.0.0
+
+# Data Processing
+numpy>=2.1.2
+huggingface-hub>=0.33.2
+tokenizers==0.21.2
+safetensors==0.5.3
+tqdm>=4.67.1
+
+# Serialization and Data Formats
+onnx==1.18.0
+protobuf==6.31.1
+
+# Configuration and Template Processing
+PyYAML>=6.0.2
+Jinja2>=3.1.4
+MarkupSafe>=2.1.5
+
+# Networking and HTTP
+requests>=2.32.4
+urllib3>=2.5.0
+certifi>=2025.7.9
+charset-normalizer>=3.4.2
+idna>=3.10
+
+# Utilities
+filelock>=3.13.1
+fsspec>=2024.6.1
+packaging>=25.0
+regex>=2024.11.6
+
+# Logging and Console Output
+coloredlogs>=15.0.1
+humanfriendly>=10.0
+colorama>=0.4.6
+
+# OpenVINO Telemetry
+openvino-telemetry>=2025.2.0
+
+# Additional Low-level Libraries
+flatbuffers>=25.2.10

@@ -1,28 +1,37 @@
+from transformers import (
+    AutoModel, AutoModelForSequenceClassification, AutoModelForTokenClassification,
+    AutoModelForQuestionAnswering, AutoModelForMaskedLM
+)
+from transformers import BertConfig
 import os
-from transformers import AutoConfig, AutoTokenizer
+import json
+from transformers import AutoTokenizer
 from safetensors.torch import load_file
 import torch
 
 # --- Paths ---
 # Relative path to model directory - adjust based on your setup
-BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "proxy_models_for_intel", "test_bigger_model")
+BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(
+    os.path.abspath(__file__)), "proxy_models_for_intel", "test_smaller_model"))
 # Alternative: Use test_smaller_model for smaller model
-# BASE_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "proxy_models_for_intel", "test_smaller_model")
+# BASE_DIR = os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)), "proxy_models_for_intel", "test_smaller_model"))
 SAFE_PATH = os.path.join(BASE_DIR, "model.safetensors")
 CONFIG_PATH = os.path.join(BASE_DIR, "config.json")
 ONNX_PATH = os.path.join(BASE_DIR, "model.onnx")
 
-# --- Load config ---
-config = AutoConfig.from_pretrained(CONFIG_PATH)
+# --- Load config manually ---
+# Load config from JSON file directly
+with open(CONFIG_PATH, 'r') as f:
+    config_dict = json.load(f)
+
+# Create config object from dict using the specific config class
+config = BertConfig.from_dict(config_dict)
 
 # --- Dynamically choose the right model class ---
-from transformers import (
-    AutoModel, AutoModelForSequenceClassification, AutoModelForTokenClassification,
-    AutoModelForQuestionAnswering, AutoModelForMaskedLM
-)
 
 # Get the architecture from config (e.g., "BertForSequenceClassification")
-architecture = config.architectures[0] if hasattr(config, "architectures") else None
+architecture = config.architectures[0] if hasattr(
+    config, "architectures") else None
 
 # Map architecture to class
 model_class = {
@@ -42,9 +51,11 @@ model.load_state_dict(state_dict)       # Load weights
 model.eval()
 
 # --- Prepare Dummy Input ---
-tokenizer = AutoTokenizer.from_pretrained("bert-base-uncased")  # Or use your model name if not BERT
+tokenizer = AutoTokenizer.from_pretrained(
+    "bert-base-uncased")  # Or use your model name if not BERT
 dummy_text = "ONNX export test input."
-inputs = tokenizer(dummy_text, return_tensors="pt", max_length=512, padding="max_length", truncation=True)
+inputs = tokenizer(dummy_text, return_tensors="pt",
+                   max_length=512, padding="max_length", truncation=True)
 input_names = list(inputs.keys())
 dummy_input = tuple(inputs.values())
 
