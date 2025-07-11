@@ -19,9 +19,10 @@ All tests are conducted on Intel hardware (CPU, GPU, NPU) to evaluate the perfor
 
 ### Installation Files
 
-- **`requirements.txt`** - Complete environment with all packages and exact versions
-- **`requirements-minimal.txt`** - Essential packages only
-- **`requirements-remaining.txt`** - Packages to install after PyTorch XPU
+- **`requirements/`** - Directory containing all Python package requirements
+  - `requirements.txt` - Complete environment with all packages and exact versions
+  - `requirements-minimal.txt` - Essential packages only
+  - `requirements-remaining.txt` - Packages to install after PyTorch XPU
 - **`install_environment.bat`** - Automated installation script for Windows
 - **`install_environment.sh`** - Automated installation script for Linux/Mac
 - **`INSTALLATION_GUIDE.md`** - Comprehensive installation and setup guide
@@ -261,3 +262,16 @@ See `INSTALLATION_GUIDE.md` for detailed troubleshooting steps and common issues
 - Intel-specific libraries are required for optimal NPU performance
 - **Scripts use relative paths** for GitHub-friendly portability
 - Model files should be placed in the `proxy_models_for_intel` directory relative to the script location
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+**Open Source**: This project is completely open source and free to use. You can:
+
+- ✅ Use it for any purpose (commercial or personal)
+- ✅ Modify and distribute the code
+- ✅ Create derivative works
+- ✅ Use it in your own projects
+
+**Attribution**: While not required, attribution is appreciated if you use this benchmarking suite in your research or projects.

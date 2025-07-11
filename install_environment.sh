@@ -36,7 +36,7 @@ echo "✓ PyTorch XPU installed"
 
 # Install remaining packages from requirements
 echo "Installing remaining packages..."
-pip install -r requirements-remaining.txt
+pip install -r requirements/requirements-remaining.txt
 
 echo "✓ All packages installed successfully"
 
